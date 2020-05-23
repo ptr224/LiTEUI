@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Version>3.0.0</Version>
+    <Authors>Pietro Gagliardi</Authors>
   </PropertyGroup>
 
 </Project>
