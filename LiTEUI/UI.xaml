@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="UI/Border.xaml"/>
+        <!--ResourceDictionary Source="UI/Button.xaml"/ Già incluso in LiTEWindow -->
+        <ResourceDictionary Source="UI/CheckBox.xaml"/>
+        <ResourceDictionary Source="UI/ComboBox.xaml"/>
+        <ResourceDictionary Source="UI/ComboBoxItem.xaml"/>
+        <ResourceDictionary Source="UI/GroupBox.xaml"/>
+        <ResourceDictionary Source="UI/Label.xaml"/>
+        <ResourceDictionary Source="UI/ListBox.xaml"/>
+        <ResourceDictionary Source="UI/ListBoxItem.xaml"/>
+        <ResourceDictionary Source="UI/LiTENavigationWindow.xaml"/>
+        <!--ResourceDictionary Source="UI/LiTEWindow.xaml"/ Già incluso in LiTENavigationWindow -->
+        <ResourceDictionary Source="UI/ProgressBar.xaml"/>
+        <ResourceDictionary Source="UI/RadioButton.xaml"/>
+        <ResourceDictionary Source="UI/ScrollBar.xaml"/>
+        <ResourceDictionary Source="UI/TabControl.xaml"/>
+        <ResourceDictionary Source="UI/TabItem.xaml"/>
+        <ResourceDictionary Source="UI/TextBox.xaml"/>
+        <ResourceDictionary Source="UI/ToggleButton.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

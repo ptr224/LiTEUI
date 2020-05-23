@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ld="clr-namespace:LiTEUI">
+    <Style TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="BorderBrush" Value="{Binding ActiveColor, FallbackValue=#FF262626}"/>
+    </Style>
+</ResourceDictionary>
