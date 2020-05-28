@@ -10,6 +10,11 @@ namespace LiTEUI
     /// </summary>
     public class LiTENavigationWindow : LiTEWindow
     {
+        static LiTENavigationWindow()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(LiTENavigationWindow), new FrameworkPropertyMetadata(typeof(LiTENavigationWindow)));
+        }
+
         public static readonly DependencyProperty NavigationButtonProperty = DependencyProperty.Register(nameof(NavigationButton),
             typeof(bool), typeof(LiTENavigationWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty StartupPageProperty = DependencyProperty.Register(nameof(StartupPage),
@@ -39,7 +44,6 @@ namespace LiTEUI
         public LiTENavigationWindow()
         {
             NavigationService = new NavigationService(this);
-            Style = (Style)FindResource(typeof(LiTENavigationWindow));
 
             Closing += LiTENavigationWindow_Closing;
             Closed += LiTENavigationWindow_Closed;

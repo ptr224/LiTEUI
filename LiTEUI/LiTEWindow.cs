@@ -9,6 +9,11 @@ namespace LiTEUI
 {
     public class LiTEWindow : Window
     {
+        static LiTEWindow()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(LiTEWindow), new FrameworkPropertyMetadata(typeof(LiTEWindow)));
+        }
+
         public static readonly DependencyProperty ActiveColorProperty = DependencyProperty.Register(nameof(ActiveColor),
             typeof(string), typeof(LiTEWindow), new FrameworkPropertyMetadata("#FF262626", FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty InactiveColorProperty = DependencyProperty.Register(nameof(InactiveColor),
@@ -160,7 +165,6 @@ namespace LiTEUI
         public LiTEWindow()
         {
             DataContext = this;
-            Style = (Style)FindResource(typeof(LiTEWindow));
 
             // Forza aggiornamento dell'altezza massima
             IsFullscreen = false;
