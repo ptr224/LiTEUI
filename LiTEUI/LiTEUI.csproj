@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <Authors>Pietro Gagliardi</Authors>
     <RepositoryUrl>https://github.com/ptr224/LiTEUI</RepositoryUrl>
     <Description>Interfaccia customizzata per la suite LiTE.</Description>
