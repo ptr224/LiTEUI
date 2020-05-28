@@ -16,7 +16,7 @@
         <Setter Property="Focusable" Value="false" />
         <Setter Property="Margin" Value="1" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Background" Value="{Binding ActiveColor, FallbackValue=#FF262626}"/>
+        <Setter Property="Background" Value="{DynamicResource ActiveColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -31,7 +31,7 @@
                             <Setter Property="BorderThickness" Value="0"/>
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" Value="{Binding InactiveColor, FallbackValue=#FF7F7F7F}"/>
+                            <Setter Property="Background" Value="{DynamicResource InactiveColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ld="clr-namespace:LiTEUI">
     <Style TargetType="{x:Type ListBox}">
-        <Setter Property="Background" Value="{Binding HighlightedColor, FallbackValue=#90FFFFFF}"/>
-        <Setter Property="BorderBrush" Value="{Binding ActiveColor, FallbackValue=#FF262626}"/>
-        <Setter Property="Foreground" Value="{Binding ActiveColor, FallbackValue=#FF262626}"/>
+        <Setter Property="Background" Value="{DynamicResource HighlightedColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ActiveColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ActiveColor}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -22,8 +22,8 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{Binding InactiveColor, FallbackValue=#FF7F7F7F}"/>
-                            <Setter Property="BorderBrush" Value="{Binding InactiveColor, FallbackValue=#FF7F7F7F}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource InactiveColor}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource InactiveColor}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>

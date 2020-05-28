@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ld="clr-namespace:LiTEUI">
     <Style TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{Binding ActiveColor, FallbackValue=#FF262626}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ActiveColor}"/>
         <Setter Property="Background" Value="{x:Null}"/>
-        <Setter Property="BorderBrush" Value="{Binding ActiveColor, FallbackValue=#FF262626}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ActiveColor}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -17,8 +17,8 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{Binding InactiveColor, FallbackValue=#FF7F7F7F}"/>
-                            <Setter Property="BorderBrush" Value="{Binding InactiveColor, FallbackValue=#FF7F7F7F}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource InactiveColor}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource InactiveColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -9,81 +9,15 @@ namespace LiTEUI
 {
     public class LiTEWindow : Window
     {
+        #region Style and properties
+
         static LiTEWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(LiTEWindow), new FrameworkPropertyMetadata(typeof(LiTEWindow)));
         }
 
-        public static readonly DependencyProperty ActiveColorProperty = DependencyProperty.Register(nameof(ActiveColor),
-            typeof(string), typeof(LiTEWindow), new FrameworkPropertyMetadata("#FF262626", FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty InactiveColorProperty = DependencyProperty.Register(nameof(InactiveColor),
-            typeof(string), typeof(LiTEWindow), new FrameworkPropertyMetadata("#FF7F7F7F", FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty BackgroundColorProperty = DependencyProperty.Register(nameof(BackgroundColor),
-            typeof(string), typeof(LiTEWindow), new FrameworkPropertyMetadata("#FFFFFFFF", FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty HighlightedColorProperty = DependencyProperty.Register(nameof(HighlightedColor),
-            typeof(string), typeof(LiTEWindow), new FrameworkPropertyMetadata("#90FFFFFF", FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty WindowBaseColorProperty = DependencyProperty.Register(nameof(WindowBaseColor),
-            typeof(string), typeof(LiTEWindow), new FrameworkPropertyMetadata("#FFD3D3D3", FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty WindowColorProperty = DependencyProperty.Register(nameof(WindowColor),
-            typeof(string), typeof(LiTEWindow), new FrameworkPropertyMetadata("#C7D3D3D3", FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty IsToolWindowProperty = DependencyProperty.Register(nameof(IsToolWindow),
             typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty IsResizableProperty = DependencyProperty.Register(nameof(IsResizable),
-            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty IsFullscreenProperty = DependencyProperty.Register(nameof(IsFullscreen),
-            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender, FullscreenChanged));
-        public static readonly DependencyProperty IsTransparentProperty = DependencyProperty.Register(nameof(IsTransparent),
-            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public string ActiveColor
-        {
-            get => (string)GetValue(ActiveColorProperty);
-            private set => SetValue(ActiveColorProperty, value);
-        }
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public string InactiveColor
-        {
-            get => (string)GetValue(InactiveColorProperty);
-            private set => SetValue(InactiveColorProperty, value);
-        }
-
-        internal string BackgroundBaseColor { get; private set; } = "#FFFFFFFF";
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public string BackgroundColor
-        {
-            get => (string)GetValue(BackgroundColorProperty);
-            private set => SetValue(BackgroundColorProperty, value);
-        }
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public string HighlightedColor
-        {
-            get => (string)GetValue(HighlightedColorProperty);
-            private set => SetValue(HighlightedColorProperty, value);
-        }
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public string WindowBaseColor
-        {
-            get => (string)GetValue(WindowBaseColorProperty);
-            private set => SetValue(WindowBaseColorProperty, value);
-        }
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public string WindowColor
-        {
-            get => (string)GetValue(WindowColorProperty);
-            private set => SetValue(WindowColorProperty, value);
-        }
 
         [Bindable(true)]
         [Category(nameof(LiTEWindow))]
@@ -93,6 +27,9 @@ namespace LiTEUI
             set => SetValue(IsToolWindowProperty, value);
         }
 
+        public static readonly DependencyProperty IsResizableProperty = DependencyProperty.Register(nameof(IsResizable),
+            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+
         [Bindable(true)]
         [Category(nameof(LiTEWindow))]
         public bool IsResizable
@@ -101,20 +38,15 @@ namespace LiTEUI
             set => SetValue(IsResizableProperty, value);
         }
 
+        public static readonly DependencyProperty IsFullscreenProperty = DependencyProperty.Register(nameof(IsFullscreen),
+            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender, FullscreenChanged));
+
         [Bindable(true)]
         [Category(nameof(LiTEWindow))]
         public bool IsFullscreen
         {
             get => (bool)GetValue(IsFullscreenProperty);
             set => SetValue(IsFullscreenProperty, value);
-        }
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public bool IsTransparent
-        {
-            get => (bool)GetValue(IsTransparentProperty);
-            set => SetValue(IsTransparentProperty, value);
         }
 
         private static void FullscreenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -129,38 +61,80 @@ namespace LiTEUI
             }
         }
 
-        public void SetColors(Color active, Color inactive, Color background)
+        public static readonly DependencyProperty IsTransparentProperty = DependencyProperty.Register(nameof(IsTransparent),
+            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        [Bindable(true)]
+        [Category(nameof(LiTEWindow))]
+        public bool IsTransparent
         {
-            ActiveColor = active.ToString();
-            InactiveColor = inactive.ToString();
-            BackgroundBaseColor = background.ToString();
+            get => (bool)GetValue(IsTransparentProperty);
+            set => SetValue(IsTransparentProperty, value);
+        }
+
+        #endregion
+
+        #region Theme
+
+        // Calcola valori per tutte le chiavi dei colori
+        private static void SetTheme(ResourceDictionary resources, Color active, Color inactive, Color background)
+        {
+            resources["ActiveColor"] = new SolidColorBrush(active);
+            resources["InactiveColor"] = new SolidColorBrush(inactive);
 
             // Sottrai da background il 20% di active
-            int sr = (int)(active.R * 0.2 + background.R * 0.8);
-            int sg = (int)(active.G * 0.2 + background.G * 0.8);
-            int sb = (int)(active.B * 0.2 + background.B * 0.8);
+            byte sr = (byte)(active.R * 0.2 + background.R * 0.8);
+            byte sg = (byte)(active.G * 0.2 + background.G * 0.8);
+            byte sb = (byte)(active.B * 0.2 + background.B * 0.8);
 
-            string special = $"{sr:X2}{sg:X2}{sb:X2}";
+            var special = Color.FromRgb(sr, sg, sb);
 
             // Usa il colore più brillante per evidenziare e il meno per lo sfondo
-            var ac = System.Drawing.Color.FromArgb(255, active.R, active.G, active.B);
-            var bc = System.Drawing.Color.FromArgb(255, background.R, background.G, background.B);
+            var ac = System.Drawing.Color.FromArgb(0xFF, active.R, active.G, active.B);
+            var bc = System.Drawing.Color.FromArgb(0xFF, background.R, background.G, background.B);
 
             if (ac.GetBrightness() > bc.GetBrightness())
             {
-                BackgroundColor = "#FF" + special;
-                HighlightedColor = "#90" + special;
-                WindowBaseColor = "#FF" + BackgroundBaseColor.Substring(3);
-                WindowColor = "#C7" + BackgroundBaseColor.Substring(3);
+                resources["BackgroundColor"] = new SolidColorBrush(Color.FromArgb(0xFF, special.R, special.G, special.B));
+                resources["HighlightedColor"] = new SolidColorBrush(Color.FromArgb(0x90, special.R, special.G, special.B));
+                resources["WindowBaseColor"] = new SolidColorBrush(Color.FromArgb(0xFF, background.R, background.G, background.B));
+                resources["WindowColor"] = new SolidColorBrush(Color.FromArgb(0xC7, background.R, background.G, background.B));
             }
             else
             {
-                BackgroundColor = "#FF" + BackgroundBaseColor.Substring(3);
-                HighlightedColor = "#90" + BackgroundBaseColor.Substring(3);
-                WindowBaseColor = "#FF" + special;
-                WindowColor = "#C7" + special;
+                resources["BackgroundColor"] = new SolidColorBrush(Color.FromArgb(0xFF, background.R, background.G, background.B));
+                resources["HighlightedColor"] = new SolidColorBrush(Color.FromArgb(0x90, background.R, background.G, background.B));
+                resources["WindowBaseColor"] = new SolidColorBrush(Color.FromArgb(0xFF, special.R, special.G, special.B));
+                resources["WindowColor"] = new SolidColorBrush(Color.FromArgb(0xC7, special.R, special.G, special.B));
             }
         }
+
+        /// <summary>
+        /// Imposta il tema globale dell'applicazione.
+        /// </summary>
+        /// <param name="active">Il colore degli elementi attivi.</param>
+        /// <param name="inactive">Il colore degli elementi inattivi.</param>
+        /// <param name="background">Il colore di base dello sfondo.</param>
+        public static void SetGlobalColors(Color active, Color inactive, Color background)
+        {
+            SetTheme(Application.Current.Resources, active, inactive, background);
+        }
+
+        internal Color[] Colors { get; private set; }
+
+        /// <summary>
+        /// Imposta il tema della finestra corrente.
+        /// </summary>
+        /// <param name="active">Il colore degli elementi attivi.</param>
+        /// <param name="inactive">Il colore degli elementi inattivi.</param>
+        /// <param name="background">Il colore di base dello sfondo.</param>
+        public void SetColors(Color active, Color inactive, Color background)
+        {
+            Colors = new[] { active, inactive, background };
+            SetTheme(Resources, active, inactive, background);
+        }
+
+        #endregion
 
         public LiTEWindow()
         {

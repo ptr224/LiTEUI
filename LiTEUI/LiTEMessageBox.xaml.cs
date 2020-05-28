@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
-using System.Windows.Media;
 
 namespace LiTEUI
 {
@@ -21,14 +20,16 @@ namespace LiTEUI
         {
             var msg = new LiTEMessageBoxWindow(messageBoxText, caption, button, icon);
 
-            //Imposta l'owner e se è una LiTEWindow usa stesso tema
+            //Imposta l'owner e usa lo stesso tema
             if (owner != null)
             {
                 msg.Owner = owner;
-                var oa = (Color)ColorConverter.ConvertFromString(owner.ActiveColor);
-                var oi = (Color)ColorConverter.ConvertFromString(owner.InactiveColor);
-                var ob = (Color)ColorConverter.ConvertFromString(owner.BackgroundBaseColor);
-                msg.SetColors(oa, oi, ob);
+                msg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+                var colors = owner.Colors;
+                if (colors != null)
+                    msg.SetColors(colors[0], colors[1], colors[2]);
+
                 msg.IsTransparent = owner.IsTransparent;
             }
 

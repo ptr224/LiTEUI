@@ -18,10 +18,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="{Binding HighlightedColor, FallbackValue=#90FFFFFF}"/>
+                            <Setter Property="Background" Value="{DynamicResource HighlightedColor}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Background" Value="{Binding BackgroundColor, FallbackValue=#FFFFFFFF}"/>
+                            <Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
