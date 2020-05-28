@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/Border.xaml"/>
+        <!--ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/Button.xaml"/ Già incluso in LiTEWindow -->
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/CheckBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ComboBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ComboBoxItem.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/GroupBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/Label.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ListBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ListBoxItem.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/LiTENavigationWindow.xaml"/>
+        <!--ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/LiTEWindow.xaml"/ Già incluso in LiTENavigationWindow -->
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ProgressBar.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/RadioButton.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ScrollBar.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/TabControl.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/TabItem.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/TextBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ToggleButton.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
