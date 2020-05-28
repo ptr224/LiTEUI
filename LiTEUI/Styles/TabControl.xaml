@@ -5,8 +5,8 @@
         <Setter Property="Padding" Value="2"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="{Binding HighlightedColor, FallbackValue=#90FFFFFF}"/>
-        <Setter Property="BorderBrush" Value="{Binding ActiveColor, FallbackValue=#FF262626}"/>
+        <Setter Property="Background" Value="{DynamicResource HighlightedColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ActiveColor}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -56,7 +56,7 @@
                             <Setter Property="CornerRadius" Value="3,0,0,3" TargetName="contentPanel"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="BorderBrush" Value="{Binding InactiveColor, FallbackValue=#FF7F7F7F}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource InactiveColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

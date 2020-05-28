@@ -3,6 +3,6 @@
                     xmlns:ld="clr-namespace:LiTEUI">
     <Style TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="3"/>
-        <Setter Property="BorderBrush" Value="{Binding ActiveColor, FallbackValue=#FF262626}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ActiveColor}"/>
     </Style>
 </ResourceDictionary>

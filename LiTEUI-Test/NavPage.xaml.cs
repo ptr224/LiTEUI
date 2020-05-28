@@ -1,17 +1,8 @@
 ﻿using LiTEUI;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LiTEUI_Test
 {
@@ -48,30 +39,31 @@ namespace LiTEUI_Test
             switch (me.SelectedIndex)
             {
                 case 0:
-                    a = (Color)ColorConverter.ConvertFromString("#FF262626");
-                    i = (Color)ColorConverter.ConvertFromString("#FF7F7F7F");
-                    b = (Color)ColorConverter.ConvertFromString("#FFFFFFFF");
+                    a = Color.FromRgb(0x26, 0x26, 0x26);
+                    i = Color.FromRgb(0x7F, 0x7F, 0x7F);
+                    b = Color.FromRgb(0xFF, 0xFF, 0xFF);
                     break;
                 case 1:
-                    a = (Color)ColorConverter.ConvertFromString("#FFFFFFFF");
-                    i = (Color)ColorConverter.ConvertFromString("#FF7F7F7F");
-                    b = (Color)ColorConverter.ConvertFromString("#FF000000");
+                    a = Color.FromRgb(0xFF, 0xFF, 0xFF);
+                    i = Color.FromRgb(0x7F, 0x7F, 0x7F);
+                    b = Color.FromRgb(0x00, 0x00, 0x00);
                     break;
                 case 2:
-                    a = (Color)ColorConverter.ConvertFromString("#FF00FF00");
-                    i = (Color)ColorConverter.ConvertFromString("#FFFF0000");
-                    b = (Color)ColorConverter.ConvertFromString("#FF000000");
+                    a = Color.FromRgb(0x00, 0xFF, 0x00);
+                    i = Color.FromRgb(0xFF, 0x00, 0x00);
+                    b = Color.FromRgb(0x00, 0x00, 0x00);
                     break;
                 case 3:
-                    a = (Color)ColorConverter.ConvertFromString("#FF00FFFF");
-                    i = (Color)ColorConverter.ConvertFromString("#FF007F7F");
-                    b = (Color)ColorConverter.ConvertFromString("#FF000000");
+                    a = Color.FromRgb(0x00, 0xFF, 0xFF);
+                    i = Color.FromRgb(0x00, 0x7F, 0x7F);
+                    b = Color.FromRgb(0x00, 0x00, 0x00);
                     break;
                 default:
                     return;
             }
 
             GetWindow()?.SetColors(a, i, b);
+            //LiTEWindow.SetGlobalColors(a, i, b);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -81,7 +73,8 @@ namespace LiTEUI_Test
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate<NavPage>(("Title", Title));
+            //NavigationService.Navigate<NavPage>(("Title", Title));
+            new MainWindow().Show();
         }
     }
 }
