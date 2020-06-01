@@ -12,27 +12,23 @@
         <Setter Property="Foreground" Value="{DynamicResource ActiveColor}"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome ResizeBorderThickness="6" CaptionHeight="24" CornerRadius="5" GlassFrameThickness="1"/>
+                <WindowChrome ResizeBorderThickness="{DynamicResource WindowResizeBorderThickness}" CaptionHeight="{DynamicResource WindowBarHeight}" CornerRadius="{DynamicResource WindowCornerSize}" GlassFrameThickness="1"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ld:LiTENavigationWindow}">
-                    <Border x:Name="border" BorderThickness="1.2" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
-                        <Grid>
-                            <Grid x:Name="windowBar" Margin="10,0" VerticalAlignment="Top" Height="30">
-                                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                    <Button x:Name="back" Content="&#xE72B;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" IsEnabled="False"/>
-                                    <Label x:Name="title" Content="{TemplateBinding Title}" Foreground="{TemplateBinding BorderBrush}" Margin="10,0,10,0"/>
-                                </StackPanel>
-                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                    <Button x:Name="minimize" Content="&#xE949;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets"/>
-                                    <Button x:Name="maximize" Content="&#xE739;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets"/>
-                                    <Button x:Name="close" Content="&#xE106;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets"/>
-                                </StackPanel>
-                            </Grid>
-                            <ContentPresenter x:Name="content" Margin="10,30,10,10"/>
-                        </Grid>
+                    <Border x:Name="border" Padding="{DynamicResource WindowContentPadding}" BorderThickness="1.2" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="{DynamicResource WindowCornerSize}">
+                        <DockPanel>
+                            <DockPanel x:Name="windowBar" LastChildFill="False" DockPanel.Dock="Top">
+                                <Button x:Name="back" Content="&#xE72B;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" IsEnabled="False" DockPanel.Dock="Left"/>
+                                <Label x:Name="title" Content="{TemplateBinding Title}" Foreground="{TemplateBinding BorderBrush}" FontSize="{DynamicResource WindowBarTextFontSize}" Margin="10,0" DockPanel.Dock="Left"/>
+                                <Button x:Name="close" Content="&#xE106;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
+                                <Button x:Name="maximize" Content="&#xE739;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
+                                <Button x:Name="minimize" Content="&#xE949;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
+                            </DockPanel>
+                            <ContentPresenter x:Name="content"/>
+                        </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsActive" Value="false">
@@ -48,10 +44,7 @@
                         <DataTrigger Binding="{Binding IsResizable}" Value="False">
                             <Setter Property="WindowChrome.WindowChrome">
                                 <Setter.Value>
-                                    <WindowChrome>
-                                        <WindowChrome.ResizeBorderThickness>0</WindowChrome.ResizeBorderThickness>
-                                        <WindowChrome.CaptionHeight>30</WindowChrome.CaptionHeight>
-                                    </WindowChrome>
+                                    <WindowChrome ResizeBorderThickness="0"/>
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
@@ -66,13 +59,11 @@
                             <MultiDataTrigger.Setters>
                                 <Setter Property="WindowChrome.WindowChrome">
                                     <Setter.Value>
-                                        <WindowChrome>
-                                            <WindowChrome.CaptionHeight>0</WindowChrome.CaptionHeight>
-                                        </WindowChrome>
+                                        <WindowChrome CaptionHeight="0"/>
                                     </Setter.Value>
                                 </Setter>
                                 <Setter Property="Visibility" Value="Collapsed" TargetName="windowBar"/>
-                                <Setter Property="Margin" Value="10" TargetName="content"/>
+                                <Setter Property="Padding" Value="{DynamicResource FullscreenWindowContentPadding}" TargetName="border"/>
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
                         <DataTrigger Binding="{Binding NavigationButton}" Value="False">
