@@ -83,7 +83,7 @@ namespace LiTEUI
             {
                 LiTEWindowTheme.Light => new[] { Color.FromRgb(0x26, 0x26, 0x26), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0xFF, 0xFF, 0xFF)},
                 LiTEWindowTheme.Dark => new[] { Color.FromRgb(0xFF, 0xFF, 0xFF), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0x00, 0x00, 0x00)},
-                _ => null
+                _ => throw new ArgumentException("Theme not found");
             };
 
         // Calcola valori per tutte le chiavi dei colori
