@@ -7,6 +7,8 @@ using System.Windows.Media;
 
 namespace LiTEUI
 {
+    public enum LiTEWindowTheme { Light, Dark }
+
     public class LiTEWindow : Window
     {
         #region Style and properties
@@ -76,6 +78,14 @@ namespace LiTEUI
 
         #region Theme
 
+        private static Color[] GetThemeColors(LiTEWindowTheme theme)
+            => theme switch
+            {
+                LiTEWindowTheme.Light => new[] { Color.FromRgb(0x26, 0x26, 0x26), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0xFF, 0xFF, 0xFF)},
+                LiTEWindowTheme.Dark => new[] { Color.FromRgb(0xFF, 0xFF, 0xFF), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0x00, 0x00, 0x00)},
+                _ => null
+            };
+
         // Calcola valori per tutte le chiavi dei colori
         private static void SetTheme(ResourceDictionary resources, Color active, Color inactive, Color background)
         {
@@ -120,6 +130,16 @@ namespace LiTEUI
             SetTheme(Application.Current.Resources, active, inactive, background);
         }
 
+        /// <summary>
+        /// Imposta il tema globale dell'applicazione.
+        /// </summary>
+        /// <param name="theme">Il tema da usare.</param>
+        public static void SetGlobalColors(LiTEWindowTheme theme)
+        {
+            var colors = GetThemeColors(theme);
+            SetTheme(Application.Current.Resources, colors[0], colors[1], colors[2]);
+        }
+
         internal Color[] Colors { get; private set; }
 
         /// <summary>
@@ -132,6 +152,18 @@ namespace LiTEUI
         {
             Colors = new[] { active, inactive, background };
             SetTheme(Resources, active, inactive, background);
+        }
+
+        /// <summary>
+        /// Imposta il tema della finestra corrente.
+        /// </summary>
+        /// <param name="theme">Il tema da usare.</param>
+        public void SetColors(LiTEWindowTheme theme)
+        {
+            var colors = GetThemeColors(theme);
+
+            Colors = colors;
+            SetTheme(Resources, colors[0], colors[1], colors[2]);
         }
 
         #endregion
