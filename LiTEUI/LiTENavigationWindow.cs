@@ -15,23 +15,24 @@ namespace LiTEUI
             DefaultStyleKeyProperty.OverrideMetadata(typeof(LiTENavigationWindow), new FrameworkPropertyMetadata(typeof(LiTENavigationWindow)));
         }
 
-        public static readonly DependencyProperty NavigationButtonProperty = DependencyProperty.Register(nameof(NavigationButton),
-            typeof(bool), typeof(LiTENavigationWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty StartupPageProperty = DependencyProperty.Register(nameof(StartupPage),
-            typeof(Type), typeof(LiTENavigationWindow), new FrameworkPropertyMetadata(null));
-
         internal Button Back;
         internal Label PageTitle;
 
         public NavigationService NavigationService { get; }
 
+        public static readonly DependencyProperty HideNavigationButtonProperty = DependencyProperty.Register(nameof(HideNavigationButton),
+            typeof(bool), typeof(LiTENavigationWindow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
+
         [Bindable(true)]
         [Category(nameof(LiTENavigationWindow))]
-        public bool NavigationButton
+        public bool HideNavigationButton
         {
-            get => (bool)GetValue(NavigationButtonProperty);
-            set => SetValue(NavigationButtonProperty, value);
+            get => (bool)GetValue(HideNavigationButtonProperty);
+            set => SetValue(HideNavigationButtonProperty, value);
         }
+
+        public static readonly DependencyProperty StartupPageProperty = DependencyProperty.Register(nameof(StartupPage),
+            typeof(Type), typeof(LiTENavigationWindow), new FrameworkPropertyMetadata(null));
 
         [Bindable(false)]
         [Category(nameof(LiTENavigationWindow))]

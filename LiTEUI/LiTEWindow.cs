@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -8,6 +11,8 @@ using System.Windows.Media;
 namespace LiTEUI
 {
     public enum LiTEWindowTheme { Light, Dark }
+
+    public class ToolbarItemsCollection : ObservableCollection<ToolbarButton> { }
 
     public class LiTEWindow : Window
     {
@@ -74,6 +79,30 @@ namespace LiTEUI
             set => SetValue(IsTransparentProperty, value);
         }
 
+        public static readonly DependencyProperty ToolbarProperty = DependencyProperty.Register(nameof(Toolbar),
+            typeof(ToolbarItemsCollection), typeof(LiTEWindow), new FrameworkPropertyMetadata(new ToolbarItemsCollection(), FrameworkPropertyMetadataOptions.AffectsRender, ToolbarChanged));
+
+        [Bindable(true)]
+        [Category(nameof(LiTEWindow))]
+        public ToolbarItemsCollection Toolbar
+        {
+            get => (ToolbarItemsCollection)GetValue(ToolbarProperty);
+            set => SetValue(ToolbarProperty, value);
+        }
+
+        private static void ToolbarChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (LiTEWindow)d;
+
+            if (e.OldValue is ToolbarItemsCollection oldToolbar)
+                oldToolbar.CollectionChanged -= window.ToolbarItemsCollectionChanged;
+
+            if (e.NewValue == null)
+                throw new ArgumentNullException();
+
+            window.InitializeToolbar();
+        }
+
         #endregion
 
         #region Theme
@@ -83,7 +112,7 @@ namespace LiTEUI
             {
                 LiTEWindowTheme.Light => new[] { Color.FromRgb(0x26, 0x26, 0x26), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0xFF, 0xFF, 0xFF)},
                 LiTEWindowTheme.Dark => new[] { Color.FromRgb(0xFF, 0xFF, 0xFF), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0x00, 0x00, 0x00)},
-                _ => throw new ArgumentException("Theme not found");
+                _ => throw new ArgumentException("Theme not found")
             };
 
         // Calcola valori per tutte le chiavi dei colori
@@ -190,6 +219,9 @@ namespace LiTEUI
             ((Button)GetTemplateChild("minimize")).Click += (_, __) =>
                 WindowState = WindowState.Minimized;
 
+            // Inizializza toolbar
+            InitializeToolbar();
+
             // Attiva l'effetto blur (su thread UI per non rallentare)
             await Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
             {
@@ -207,6 +239,45 @@ namespace LiTEUI
                     ContentRendered -= OnContentRendered;
                 }
             }));
+        }
+
+        private void InitializeToolbar()
+        {
+            var toolbar = (DockPanel)GetTemplateChild("toolbar");
+
+            // Ripulisci toolbar
+            toolbar.Children.Clear();
+
+            // Aggiungi elementi già presenti
+            foreach (var item in Toolbar)
+                toolbar.Children.Add(item);
+
+            Toolbar.CollectionChanged += ToolbarItemsCollectionChanged;
+        }
+
+        private void ToolbarItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var toolbar = (DockPanel)GetTemplateChild("toolbar");
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    toolbar.Children.Insert(e.NewStartingIndex, (ToolbarButton)e.NewItems[0]);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    toolbar.Children[e.OldStartingIndex] = (ToolbarButton)e.NewItems[0];
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    toolbar.Children.RemoveAt(e.OldStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    toolbar.Children.RemoveAt(e.OldStartingIndex);
+                    toolbar.Children.Insert(e.NewStartingIndex, (ToolbarButton)e.NewItems[0]);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    toolbar.Children.Clear();
+                    break;
+            }
         }
     }
 }

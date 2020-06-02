@@ -20,12 +20,13 @@
                 <ControlTemplate TargetType="{x:Type ld:LiTENavigationWindow}">
                     <Border x:Name="border" Padding="{DynamicResource WindowContentPadding}" BorderThickness="1.2" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="{DynamicResource WindowCornerSize}">
                         <DockPanel>
-                            <DockPanel x:Name="windowBar" LastChildFill="False" DockPanel.Dock="Top">
+                            <DockPanel x:Name="windowBar" DockPanel.Dock="Top">
                                 <Button x:Name="back" Content="&#xE72B;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" IsEnabled="False" DockPanel.Dock="Left"/>
-                                <Label x:Name="title" Content="{TemplateBinding Title}" Foreground="{TemplateBinding BorderBrush}" FontSize="{DynamicResource WindowBarTextFontSize}" Margin="10,0" DockPanel.Dock="Left"/>
+                                <Label x:Name="title" Content="{TemplateBinding Title}" Foreground="{TemplateBinding BorderBrush}" FontSize="{DynamicResource WindowTitleFontSize}" Margin="10,0,0,0" DockPanel.Dock="Left"/>
                                 <Button x:Name="close" Content="&#xE106;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
                                 <Button x:Name="maximize" Content="&#xE739;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
                                 <Button x:Name="minimize" Content="&#xE949;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
+                                <DockPanel x:Name="toolbar" LastChildFill="False" Margin="10,0"/>
                             </DockPanel>
                             <ContentPresenter x:Name="content"/>
                         </DockPanel>
@@ -66,7 +67,7 @@
                                 <Setter Property="Padding" Value="{DynamicResource FullscreenWindowContentPadding}" TargetName="border"/>
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
-                        <DataTrigger Binding="{Binding NavigationButton}" Value="False">
+                        <DataTrigger Binding="{Binding HideNavigationButton}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="back"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>

@@ -57,12 +57,12 @@ namespace LiTEUI_Test
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate<NavPage>(("Title", Title));
+            //NavigationService.Navigate<NavPage>(("Title", Title));
             Application.Current.Resources["WindowBarHeight"] = 40d;
             Application.Current.Resources["WindowButtonWidth"] = 40d;
             Application.Current.Resources["WindowContentMargin"] = new Thickness(10, 40, 10, 10);
-            //Application.Current.Resources["WindowBarTextFontSize"] = 16d;
-            //Application.Current.Resources["WindowBarSymbolFontSize"] = 14d;
+            Application.Current.Resources["WindowTitleFontSize"] = 16d;
+            Application.Current.Resources["WindowBarFontSize"] = 14d;
         }
     }
 }
