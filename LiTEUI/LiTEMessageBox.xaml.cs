@@ -130,26 +130,26 @@ namespace LiTEUI
             switch (button)
             {
                 case MessageBoxButton.OKCancel:
-                    Button_Cancel.Visibility = Visibility.Visible;
+                    Button_Yes.Visibility = Visibility.Collapsed;
+                    Button_No.Visibility = Visibility.Collapsed;
+
                     Button_OK.Content = Helper.GetOk();
                     Button_Cancel.Content = Helper.GetCancel();
 
                     Button_OK.Focus();
                     break;
                 case MessageBoxButton.YesNo:
-                    Button_Yes.Visibility = Visibility.Visible;
-                    Button_No.Visibility = Visibility.Visible;
                     Button_OK.Visibility = Visibility.Collapsed;
+                    Button_Cancel.Visibility = Visibility.Collapsed;
+
                     Button_Yes.Content = Helper.GetYes();
                     Button_No.Content = Helper.GetNo();
 
                     Button_Yes.Focus();
                     break;
                 case MessageBoxButton.YesNoCancel:
-                    Button_Yes.Visibility = Visibility.Visible;
-                    Button_No.Visibility = Visibility.Visible;
-                    Button_Cancel.Visibility = Visibility.Visible;
                     Button_OK.Visibility = Visibility.Collapsed;
+
                     Button_Yes.Content = Helper.GetYes();
                     Button_No.Content = Helper.GetNo();
                     Button_Cancel.Content = Helper.GetCancel();
@@ -157,7 +157,12 @@ namespace LiTEUI
                     Button_Yes.Focus();
                     break;
                 case MessageBoxButton.OK:
+                    Button_Yes.Visibility = Visibility.Collapsed;
+                    Button_No.Visibility = Visibility.Collapsed;
+                    Button_Cancel.Visibility = Visibility.Collapsed;
+
                     Button_OK.Content = Helper.GetOk();
+
                     Button_OK.Focus();
                     break;
             }

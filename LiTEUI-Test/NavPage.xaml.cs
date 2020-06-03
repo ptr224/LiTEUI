@@ -52,7 +52,7 @@ namespace LiTEUI_Test
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            LiTEMessageBox.Show(GetWindow(), "Ciao", MessageBoxImage.Information, MessageBoxButton.YesNo);
+            LiTEMessageBox.Show(GetWindow(), "Ciao", MessageBoxImage.Information, MessageBoxButton.YesNoCancel);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

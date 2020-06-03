@@ -6,7 +6,7 @@
     <s:Double x:Key="WindowBarHeight">30</s:Double>
     <s:Double x:Key="WindowButtonWidth">40</s:Double>
     <Thickness x:Key="WindowContentPadding">10,0,10,10</Thickness>
-    <Thickness x:Key="FullscreenWindowContentPadding">10</Thickness>
+    <Thickness x:Key="MaximizedWindowContentPadding">8,5,8,8</Thickness>
     <s:Double x:Key="WindowTitleFontSize">12</s:Double>
     <s:Double x:Key="WindowBarFontSize">10</s:Double>
 </ResourceDictionary>

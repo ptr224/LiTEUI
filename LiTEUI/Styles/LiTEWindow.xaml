@@ -44,36 +44,18 @@
                         </Trigger>
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter Property="Content" TargetName="maximize" Value="&#xE923;"/>
+                            <Setter Property="Padding" TargetName="border" Value="{DynamicResource MaximizedWindowContentPadding}"/>
                         </Trigger>
-                        <DataTrigger Binding="{Binding IsToolWindow}" Value="True">
-                            <Setter Property="Visibility" TargetName="maximize" Value="Collapsed"/>
+                        <Trigger Property="ResizeMode" Value="NoResize">
                             <Setter Property="Visibility" TargetName="minimize" Value="Collapsed"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsResizable}" Value="False">
-                            <Setter Property="WindowChrome.WindowChrome">
-                                <Setter.Value>
-                                    <WindowChrome ResizeBorderThickness="0"/>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsTransparent}" Value="False">
+                            <Setter Property="Visibility" TargetName="maximize" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanMinimize">
+                            <Setter Property="IsEnabled" TargetName="maximize" Value="False"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding IsTransparent, RelativeSource={RelativeSource Self}}" Value="False">
                             <Setter Property="Background" Value="{DynamicResource WindowBaseColor}"/>
                         </DataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding WindowState}" Value="Maximized"/>
-                                <Condition Binding="{Binding IsFullscreen}" Value="True"/>
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.Setters>
-                                <Setter Property="WindowChrome.WindowChrome">
-                                    <Setter.Value>
-                                        <WindowChrome CaptionHeight="0"/>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Visibility" Value="Collapsed" TargetName="windowBar"/>
-                                <Setter Property="Margin" Value="{DynamicResource FullscreenWindowContentPadding}" TargetName="content"/>
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -23,28 +23,6 @@ namespace LiTEUI
             DefaultStyleKeyProperty.OverrideMetadata(typeof(LiTEWindow), new FrameworkPropertyMetadata(typeof(LiTEWindow)));
         }
 
-        public static readonly DependencyProperty IsToolWindowProperty = DependencyProperty.Register(nameof(IsToolWindow),
-            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public bool IsToolWindow
-        {
-            get => (bool)GetValue(IsToolWindowProperty);
-            set => SetValue(IsToolWindowProperty, value);
-        }
-
-        public static readonly DependencyProperty IsResizableProperty = DependencyProperty.Register(nameof(IsResizable),
-            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public bool IsResizable
-        {
-            get => (bool)GetValue(IsResizableProperty);
-            set => SetValue(IsResizableProperty, value);
-        }
-
         public static readonly DependencyProperty IsFullscreenProperty = DependencyProperty.Register(nameof(IsFullscreen),
             typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender, FullscreenChanged));
 
@@ -80,7 +58,7 @@ namespace LiTEUI
         }
 
         public static readonly DependencyProperty ToolbarProperty = DependencyProperty.Register(nameof(Toolbar),
-            typeof(ToolbarItemsCollection), typeof(LiTEWindow), new FrameworkPropertyMetadata(new ToolbarItemsCollection(), FrameworkPropertyMetadataOptions.AffectsRender, ToolbarChanged));
+            typeof(ToolbarItemsCollection), typeof(LiTEWindow), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, ToolbarChanged));
 
         [Bindable(true)]
         [Category(nameof(LiTEWindow))]
@@ -96,9 +74,6 @@ namespace LiTEUI
 
             if (e.OldValue is ToolbarItemsCollection oldToolbar)
                 oldToolbar.CollectionChanged -= window.ToolbarItemsCollectionChanged;
-
-            if (e.NewValue == null)
-                throw new ArgumentNullException();
 
             window.InitializeToolbar();
         }
@@ -243,16 +218,21 @@ namespace LiTEUI
 
         private void InitializeToolbar()
         {
-            var toolbar = (DockPanel)GetTemplateChild("toolbar");
+            // Verifica che la finestra abbia già il tema applicato
+            if (GetTemplateChild("toolbar") is DockPanel toolbar)
+            {
+                // Ripulisci toolbar
+                toolbar.Children.Clear();
 
-            // Ripulisci toolbar
-            toolbar.Children.Clear();
+                // Aggiungi elementi già presenti
+                if (Toolbar != null)
+                {
+                    foreach (var item in Toolbar)
+                        toolbar.Children.Add(item);
 
-            // Aggiungi elementi già presenti
-            foreach (var item in Toolbar)
-                toolbar.Children.Add(item);
-
-            Toolbar.CollectionChanged += ToolbarItemsCollectionChanged;
+                    Toolbar.CollectionChanged += ToolbarItemsCollectionChanged;
+                }
+            }
         }
 
         private void ToolbarItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

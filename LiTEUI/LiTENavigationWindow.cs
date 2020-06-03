@@ -24,7 +24,7 @@ namespace LiTEUI
             typeof(bool), typeof(LiTENavigationWindow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
 
         [Bindable(true)]
-        [Category(nameof(LiTENavigationWindow))]
+        [Category(nameof(LiTEWindow))]
         public bool HideNavigationButton
         {
             get => (bool)GetValue(HideNavigationButtonProperty);
@@ -35,7 +35,7 @@ namespace LiTEUI
             typeof(Type), typeof(LiTENavigationWindow), new FrameworkPropertyMetadata(null));
 
         [Bindable(false)]
-        [Category(nameof(LiTENavigationWindow))]
+        [Category(nameof(LiTEWindow))]
         public Type StartupPage
         {
             get => (Type)GetValue(StartupPageProperty);
