@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Version>3.2.0</Version>
+    <Version>3.2.1</Version>
     <Authors>ptr224</Authors>
     <RepositoryUrl>https://github.com/ptr224/LiTEUI.git</RepositoryUrl>
     <Description>Interfaccia customizzata per WPF.</Description>
