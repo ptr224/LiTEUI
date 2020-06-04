@@ -5,9 +5,8 @@
         <ResourceDictionary Source="Button.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <Style x:Key="LiTEWindowButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Width" Value="40"/>
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="Width" Value="{DynamicResource WindowButtonWidth}"/>
+        <Setter Property="FontSize" Value="{DynamicResource WindowBarFontSize}"/>
         <Setter Property="Foreground" Value="{Binding BorderBrush, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ld:LiTEWindow}}}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
@@ -20,24 +19,23 @@
         <Setter Property="Foreground" Value="{DynamicResource ActiveColor}"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome ResizeBorderThickness="6" CaptionHeight="24" CornerRadius="5" GlassFrameThickness="1"/>
+                <WindowChrome ResizeBorderThickness="{DynamicResource WindowResizeBorderThickness}" CaptionHeight="{DynamicResource WindowBarHeight}" CornerRadius="{DynamicResource WindowCornerSize}" GlassFrameThickness="1"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ld:LiTEWindow}">
-                    <Border x:Name="border" BorderThickness="1.2" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="5">
-                        <Grid>
-                            <Grid x:Name="windowBar" Margin="10,0" VerticalAlignment="Top" Height="30">
-                                <Label x:Name="title" Content="{TemplateBinding Title}" Foreground="{TemplateBinding BorderBrush}" HorizontalAlignment="Left" Margin="10,0,0,0"/>
-                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                    <Button x:Name="minimize" Content="&#xE949;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets"/>
-                                    <Button x:Name="maximize" Content="&#xE739;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets"/>
-                                    <Button x:Name="close" Content="&#xE106;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets"/>
-                                </StackPanel>
-                            </Grid>
-                            <ContentPresenter x:Name="content" Margin="10,30,10,10"/>
-                        </Grid>
+                    <Border x:Name="border" Padding="{DynamicResource WindowContentPadding}" BorderThickness="1.2" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="{DynamicResource WindowCornerSize}">
+                        <DockPanel>
+                            <DockPanel x:Name="windowBar" Height="{DynamicResource WindowBarHeight}" DockPanel.Dock="Top">
+                                <Label x:Name="title" Content="{TemplateBinding Title}" Foreground="{TemplateBinding BorderBrush}" FontSize="{DynamicResource WindowTitleFontSize}" Margin="10,0,0,0" DockPanel.Dock="Left"/>
+                                <Button x:Name="close" Content="&#xE106;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
+                                <Button x:Name="maximize" Content="&#xE739;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
+                                <Button x:Name="minimize" Content="&#xE949;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
+                                <DockPanel x:Name="toolbar" LastChildFill="False" Margin="10,0"/>
+                            </DockPanel>
+                            <ContentPresenter/>
+                        </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsActive" Value="false">
@@ -45,41 +43,49 @@
                         </Trigger>
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter Property="Content" TargetName="maximize" Value="&#xE923;"/>
+                            <Setter Property="Padding" TargetName="border" Value="{DynamicResource MaximizedWindowContentPadding}"/>
                         </Trigger>
-                        <DataTrigger Binding="{Binding IsToolWindow}" Value="True">
-                            <Setter Property="Visibility" TargetName="maximize" Value="Collapsed"/>
+                        <Trigger Property="ResizeMode" Value="NoResize">
                             <Setter Property="Visibility" TargetName="minimize" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="maximize" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanMinimize">
+                            <Setter Property="IsEnabled" TargetName="maximize" Value="False"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding IsTransparent, RelativeSource={RelativeSource Self}}" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource WindowBaseColor}"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding IsResizable}" Value="False">
+                        <DataTrigger Binding="{Binding BarStyle, RelativeSource={RelativeSource Self}}" Value="{x:Static ld:WindowBarStyle.Hidden}">
                             <Setter Property="WindowChrome.WindowChrome">
                                 <Setter.Value>
-                                    <WindowChrome>
-                                        <WindowChrome.ResizeBorderThickness>0</WindowChrome.ResizeBorderThickness>
-                                        <WindowChrome.CaptionHeight>30</WindowChrome.CaptionHeight>
-                                    </WindowChrome>
+                                    <WindowChrome CaptionHeight="0"/>
                                 </Setter.Value>
                             </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsTransparent}" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource WindowBaseColor}"/>
+                            <Setter Property="Visibility" TargetName="windowBar" Value="Collapsed"/>
+                            <Setter Property="Padding" TargetName="border" Value="{DynamicResource MaximizedWindowContentPadding}"/>
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding WindowState}" Value="Maximized"/>
-                                <Condition Binding="{Binding IsFullscreen}" Value="True"/>
+                                <Condition Binding="{Binding BarStyle, RelativeSource={RelativeSource Self}}" Value="{x:Static ld:WindowBarStyle.HiddenMaximized}"/>
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="WindowChrome.WindowChrome">
                                     <Setter.Value>
-                                        <WindowChrome>
-                                            <WindowChrome.CaptionHeight>0</WindowChrome.CaptionHeight>
-                                        </WindowChrome>
+                                        <WindowChrome CaptionHeight="0"/>
                                     </Setter.Value>
                                 </Setter>
-                                <Setter Property="Visibility" Value="Collapsed" TargetName="windowBar"/>
-                                <Setter Property="Margin" Value="10" TargetName="content"/>
+                                <Setter Property="Visibility" TargetName="windowBar" Value="Collapsed"/>
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding BarStyle, RelativeSource={RelativeSource Self}}" Value="{x:Static ld:WindowBarStyle.Big}">
+                            <Setter Property="WindowChrome.WindowChrome">
+                                <Setter.Value>
+                                    <WindowChrome CaptionHeight="{DynamicResource WindowButtonWidth}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Height" TargetName="windowBar" Value="{DynamicResource WindowButtonWidth}"/>
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

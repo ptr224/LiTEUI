@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,6 +9,12 @@ using System.Windows.Media;
 
 namespace LiTEUI
 {
+    public enum LiTEWindowTheme { Light, Dark }
+
+    public enum WindowBarStyle { Hidden, HiddenMaximized, Normal, Big }
+
+    public class ToolbarItemsCollection : ObservableCollection<ToolbarButton> { }
+
     public class LiTEWindow : Window
     {
         #region Style and properties
@@ -14,28 +22,6 @@ namespace LiTEUI
         static LiTEWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(LiTEWindow), new FrameworkPropertyMetadata(typeof(LiTEWindow)));
-        }
-
-        public static readonly DependencyProperty IsToolWindowProperty = DependencyProperty.Register(nameof(IsToolWindow),
-            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public bool IsToolWindow
-        {
-            get => (bool)GetValue(IsToolWindowProperty);
-            set => SetValue(IsToolWindowProperty, value);
-        }
-
-        public static readonly DependencyProperty IsResizableProperty = DependencyProperty.Register(nameof(IsResizable),
-            typeof(bool), typeof(LiTEWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        [Bindable(true)]
-        [Category(nameof(LiTEWindow))]
-        public bool IsResizable
-        {
-            get => (bool)GetValue(IsResizableProperty);
-            set => SetValue(IsResizableProperty, value);
         }
 
         public static readonly DependencyProperty IsFullscreenProperty = DependencyProperty.Register(nameof(IsFullscreen),
@@ -72,9 +58,49 @@ namespace LiTEUI
             set => SetValue(IsTransparentProperty, value);
         }
 
+        public static readonly DependencyProperty BarStyleProperty = DependencyProperty.Register(nameof(BarStyle),
+            typeof(WindowBarStyle), typeof(LiTEWindow), new FrameworkPropertyMetadata(WindowBarStyle.Normal, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        [Bindable(true)]
+        [Category(nameof(LiTEWindow))]
+        public WindowBarStyle BarStyle
+        {
+            get => (WindowBarStyle)GetValue(BarStyleProperty);
+            set => SetValue(BarStyleProperty, value);
+        }
+
+        public static readonly DependencyProperty ToolbarProperty = DependencyProperty.Register(nameof(Toolbar),
+            typeof(ToolbarItemsCollection), typeof(LiTEWindow), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, ToolbarChanged));
+
+        [Bindable(true)]
+        [Category(nameof(LiTEWindow))]
+        public ToolbarItemsCollection Toolbar
+        {
+            get => (ToolbarItemsCollection)GetValue(ToolbarProperty);
+            set => SetValue(ToolbarProperty, value);
+        }
+
+        private static void ToolbarChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (LiTEWindow)d;
+
+            if (e.OldValue is ToolbarItemsCollection oldToolbar)
+                oldToolbar.CollectionChanged -= window.ToolbarItemsCollectionChanged;
+
+            window.InitializeToolbar();
+        }
+
         #endregion
 
         #region Theme
+
+        private static Color[] GetThemeColors(LiTEWindowTheme theme)
+            => theme switch
+            {
+                LiTEWindowTheme.Light => new[] { Color.FromRgb(0x26, 0x26, 0x26), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0xFF, 0xFF, 0xFF) },
+                LiTEWindowTheme.Dark => new[] { Color.FromRgb(0xFF, 0xFF, 0xFF), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0x00, 0x00, 0x00) },
+                _ => throw new ArgumentException("Theme not found")
+            };
 
         // Calcola valori per tutte le chiavi dei colori
         private static void SetTheme(ResourceDictionary resources, Color active, Color inactive, Color background)
@@ -120,6 +146,16 @@ namespace LiTEUI
             SetTheme(Application.Current.Resources, active, inactive, background);
         }
 
+        /// <summary>
+        /// Imposta il tema globale dell'applicazione.
+        /// </summary>
+        /// <param name="theme">Il tema da usare.</param>
+        public static void SetGlobalColors(LiTEWindowTheme theme)
+        {
+            var colors = GetThemeColors(theme);
+            SetTheme(Application.Current.Resources, colors[0], colors[1], colors[2]);
+        }
+
         internal Color[] Colors { get; private set; }
 
         /// <summary>
@@ -132,6 +168,18 @@ namespace LiTEUI
         {
             Colors = new[] { active, inactive, background };
             SetTheme(Resources, active, inactive, background);
+        }
+
+        /// <summary>
+        /// Imposta il tema della finestra corrente.
+        /// </summary>
+        /// <param name="theme">Il tema da usare.</param>
+        public void SetColors(LiTEWindowTheme theme)
+        {
+            var colors = GetThemeColors(theme);
+
+            Colors = colors;
+            SetTheme(Resources, colors[0], colors[1], colors[2]);
         }
 
         #endregion
@@ -158,6 +206,9 @@ namespace LiTEUI
             ((Button)GetTemplateChild("minimize")).Click += (_, __) =>
                 WindowState = WindowState.Minimized;
 
+            // Inizializza toolbar
+            InitializeToolbar();
+
             // Attiva l'effetto blur (su thread UI per non rallentare)
             await Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
             {
@@ -175,6 +226,50 @@ namespace LiTEUI
                     ContentRendered -= OnContentRendered;
                 }
             }));
+        }
+
+        private void InitializeToolbar()
+        {
+            // Verifica che la finestra abbia già il tema applicato
+            if (GetTemplateChild("toolbar") is DockPanel toolbar)
+            {
+                // Ripulisci toolbar
+                toolbar.Children.Clear();
+
+                // Aggiungi elementi già presenti
+                if (Toolbar != null)
+                {
+                    foreach (var item in Toolbar)
+                        toolbar.Children.Add(item);
+
+                    Toolbar.CollectionChanged += ToolbarItemsCollectionChanged;
+                }
+            }
+        }
+
+        private void ToolbarItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var toolbar = (DockPanel)GetTemplateChild("toolbar");
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    toolbar.Children.Insert(e.NewStartingIndex, (ToolbarButton)e.NewItems[0]);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    toolbar.Children[e.OldStartingIndex] = (ToolbarButton)e.NewItems[0];
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    toolbar.Children.RemoveAt(e.OldStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    toolbar.Children.RemoveAt(e.OldStartingIndex);
+                    toolbar.Children.Insert(e.NewStartingIndex, (ToolbarButton)e.NewItems[0]);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    toolbar.Children.Clear();
+                    break;
+            }
         }
     }
 }
