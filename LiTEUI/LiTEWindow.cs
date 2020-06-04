@@ -12,6 +12,8 @@ namespace LiTEUI
 {
     public enum LiTEWindowTheme { Light, Dark }
 
+    public enum WindowBarStyle { Hidden, HiddenMaximized, Normal, Big }
+
     public class ToolbarItemsCollection : ObservableCollection<ToolbarButton> { }
 
     public class LiTEWindow : Window
@@ -55,6 +57,17 @@ namespace LiTEUI
         {
             get => (bool)GetValue(IsTransparentProperty);
             set => SetValue(IsTransparentProperty, value);
+        }
+
+        public static readonly DependencyProperty BarStyleProperty = DependencyProperty.Register(nameof(BarStyle),
+            typeof(WindowBarStyle), typeof(LiTEWindow), new FrameworkPropertyMetadata(WindowBarStyle.Normal, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        [Bindable(true)]
+        [Category(nameof(LiTEWindow))]
+        public WindowBarStyle BarStyle
+        {
+            get => (WindowBarStyle)GetValue(BarStyleProperty);
+            set => SetValue(BarStyleProperty, value);
         }
 
         public static readonly DependencyProperty ToolbarProperty = DependencyProperty.Register(nameof(Toolbar),

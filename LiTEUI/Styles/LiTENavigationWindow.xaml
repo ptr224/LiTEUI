@@ -20,7 +20,7 @@
                 <ControlTemplate TargetType="{x:Type ld:LiTENavigationWindow}">
                     <Border x:Name="border" Padding="{DynamicResource WindowContentPadding}" BorderThickness="1.2" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="{DynamicResource WindowCornerSize}">
                         <DockPanel>
-                            <DockPanel x:Name="windowBar" DockPanel.Dock="Top">
+                            <DockPanel x:Name="windowBar" Height="{DynamicResource WindowBarHeight}" DockPanel.Dock="Top">
                                 <Button x:Name="back" Content="&#xE72B;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" IsEnabled="False" DockPanel.Dock="Left"/>
                                 <Label x:Name="title" Content="{TemplateBinding Title}" Foreground="{TemplateBinding BorderBrush}" FontSize="{DynamicResource WindowTitleFontSize}" Margin="10,0,0,0" DockPanel.Dock="Left"/>
                                 <Button x:Name="close" Content="&#xE106;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
@@ -48,6 +48,37 @@
                         </Trigger>
                         <DataTrigger Binding="{Binding IsTransparent, RelativeSource={RelativeSource Self}}" Value="False">
                             <Setter Property="Background" Value="{DynamicResource WindowBaseColor}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding BarStyle, RelativeSource={RelativeSource Self}}" Value="{x:Static ld:WindowBarStyle.Hidden}">
+                            <Setter Property="WindowChrome.WindowChrome">
+                                <Setter.Value>
+                                    <WindowChrome CaptionHeight="0"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Visibility" TargetName="windowBar" Value="Collapsed"/>
+                            <Setter Property="Padding" TargetName="border" Value="{DynamicResource MaximizedWindowContentPadding}"/>
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding WindowState}" Value="Maximized"/>
+                                <Condition Binding="{Binding BarStyle, RelativeSource={RelativeSource Self}}" Value="{x:Static ld:WindowBarStyle.HiddenMaximized}"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="WindowChrome.WindowChrome">
+                                    <Setter.Value>
+                                        <WindowChrome CaptionHeight="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Visibility" TargetName="windowBar" Value="Collapsed"/>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding BarStyle, RelativeSource={RelativeSource Self}}" Value="{x:Static ld:WindowBarStyle.Big}">
+                            <Setter Property="WindowChrome.WindowChrome">
+                                <Setter.Value>
+                                    <WindowChrome CaptionHeight="{DynamicResource WindowButtonWidth}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Height" TargetName="windowBar" Value="{DynamicResource WindowButtonWidth}"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding HideNavigationButton, RelativeSource={RelativeSource Self}}" Value="True">
                             <Setter Property="Visibility" TargetName="back" Value="Collapsed"/>

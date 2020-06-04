@@ -61,8 +61,6 @@ namespace LiTEUI_Test
             Application.Current.Resources["WindowBarHeight"] = 40d;
             Application.Current.Resources["WindowButtonWidth"] = 40d;
             Application.Current.Resources["WindowContentMargin"] = new Thickness(10, 40, 10, 10);
-            Application.Current.Resources["WindowTitleFontSize"] = 16d;
-            Application.Current.Resources["WindowBarFontSize"] = 14d;
         }
     }
 }
