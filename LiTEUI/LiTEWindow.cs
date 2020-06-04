@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -98,8 +97,8 @@ namespace LiTEUI
         private static Color[] GetThemeColors(LiTEWindowTheme theme)
             => theme switch
             {
-                LiTEWindowTheme.Light => new[] { Color.FromRgb(0x26, 0x26, 0x26), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0xFF, 0xFF, 0xFF)},
-                LiTEWindowTheme.Dark => new[] { Color.FromRgb(0xFF, 0xFF, 0xFF), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0x00, 0x00, 0x00)},
+                LiTEWindowTheme.Light => new[] { Color.FromRgb(0x26, 0x26, 0x26), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0xFF, 0xFF, 0xFF) },
+                LiTEWindowTheme.Dark => new[] { Color.FromRgb(0xFF, 0xFF, 0xFF), Color.FromRgb(0x7F, 0x7F, 0x7F), Color.FromRgb(0x00, 0x00, 0x00) },
                 _ => throw new ArgumentException("Theme not found")
             };
 

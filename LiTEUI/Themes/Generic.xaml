@@ -14,6 +14,7 @@
         <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ListBox.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ListBoxItem.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/LiTENavigationWindow.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/LiTEPopup.xaml"/>
         <!--ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/LiTEWindow.xaml"/ Già incluso in LiTENavigationWindow -->
         <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/ProgressBar.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/LiTEUI;component/Styles/RadioButton.xaml"/>

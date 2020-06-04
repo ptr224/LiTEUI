@@ -58,9 +58,11 @@ namespace LiTEUI_Test
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //NavigationService.Navigate<NavPage>(("Title", Title));
-            Application.Current.Resources["WindowBarHeight"] = 40d;
+            /*Application.Current.Resources["WindowBarHeight"] = 40d;
             Application.Current.Resources["WindowButtonWidth"] = 40d;
-            Application.Current.Resources["WindowContentMargin"] = new Thickness(10, 40, 10, 10);
+            Application.Current.Resources["WindowContentMargin"] = new Thickness(10, 40, 10, 10);*/
+
+            popup.IsOpen = !popup.IsOpen;
         }
     }
 }

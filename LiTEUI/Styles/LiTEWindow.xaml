@@ -34,7 +34,7 @@
                                 <Button x:Name="minimize" Content="&#xE949;" Style="{StaticResource LiTEWindowButton}" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"/>
                                 <DockPanel x:Name="toolbar" LastChildFill="False" Margin="10,0"/>
                             </DockPanel>
-                            <ContentPresenter x:Name="content"/>
+                            <ContentPresenter/>
                         </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
