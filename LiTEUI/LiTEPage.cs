@@ -59,6 +59,24 @@ namespace LiTEUI
             set => SetValue(TitleProperty, value);
         }
 
+        public static readonly DependencyProperty ToolbarProperty = DependencyProperty.Register(nameof(Toolbar),
+            typeof(ToolbarItemsCollection), typeof(LiTEPage), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, ToolbarChanged));
+
+        [Bindable(true)]
+        [Category(nameof(LiTEPage))]
+        public ToolbarItemsCollection Toolbar
+        {
+            get => (ToolbarItemsCollection)GetValue(ToolbarProperty);
+            set => SetValue(ToolbarProperty, value);
+        }
+
+        private static void ToolbarChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = ((LiTEPage)d).GetWindow();
+            if (window != null)
+                window.Toolbar = (ToolbarItemsCollection)e.NewValue;
+        }
+
         /// <summary>
         /// Ottiene un riferimento alla finestra contenente la pagina.
         /// </summary>
@@ -87,7 +105,7 @@ namespace LiTEUI
         /// <param name="extras">I parametri passati dalla chiamata.</param>
         protected virtual void Created(NavigationParams extras)
         {
-            // Non fare niente di default
+            // Non fare nulla di default
         }
 
         /// <summary>
@@ -96,7 +114,7 @@ namespace LiTEUI
         /// <param name="extras">I parametri passati dalla chiamata.</param>
         protected virtual void Retrieved(NavigationParams extras)
         {
-            // Non fare niente di default
+            // Non fare nulla di default
         }
 
         /// <summary>

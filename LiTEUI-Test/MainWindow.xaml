@@ -7,10 +7,4 @@
         xmlns:ld="clr-namespace:LiTEUI;assembly=LiTEUI"
         mc:Ignorable="d"
         Title="LiTEUI" Height="386" Width="468" StartupPage="local:NavPage">
-    <ld:LiTENavigationWindow.Toolbar>
-        <ld:ToolbarItemsCollection>
-            <ld:SymbolToolbarButton Symbol="&#xE106;" Description="n1"/>
-            <ld:ImageToolbarButton Source="file:///D:/ptr22/OneDrive/Immagini/LiTE.png" Description="n2" Position="Right"/>
-        </ld:ToolbarItemsCollection>
-    </ld:LiTENavigationWindow.Toolbar>
 </ld:LiTENavigationWindow>

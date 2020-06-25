@@ -79,7 +79,7 @@ namespace LiTEUI
 
         public SymbolToolbarButton() : base()
         {
-            Style = (Style)FindResource("LiTEWindowButton");
+            Style = (Style)FindResource("LiTEToolbarButton");
             FontFamily = new FontFamily("Segoe MDL2 Assets");
         }
     }
@@ -109,7 +109,7 @@ namespace LiTEUI
 
         public ImageToolbarButton() : base()
         {
-            Style = (Style)FindResource("LiTEWindowButton");
+            Style = (Style)FindResource("LiTEToolbarButton");
             FontFamily = new FontFamily("Segoe MDL2 Assets");
             Padding = new Thickness(5);
         }

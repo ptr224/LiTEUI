@@ -86,6 +86,9 @@ namespace LiTEUI
 
             window.Back.IsEnabled = CanGoBack();
             window.Content = page;
+
+            // Imposta la toolbar della pagina sulla finestra
+            window.Toolbar = page.Toolbar;
         }
 
         internal bool CancelClosing()

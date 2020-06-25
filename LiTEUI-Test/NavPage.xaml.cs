@@ -64,5 +64,10 @@ namespace LiTEUI_Test
 
             popup.IsOpen = !popup.IsOpen;
         }
+
+        private void tbb_Click(object sender, RoutedEventArgs e)
+        {
+            pop.IsOpen = !pop.IsOpen;
+        }
     }
 }
