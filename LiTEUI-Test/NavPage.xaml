@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800" Title="NavPage">
     <ld:LiTEPage.Toolbar>
         <ld:ToolbarItemsCollection>
-            <ld:SymbolToolbarButton x:Name="tbb" Symbol="&#xE106;" Description="n1" Click="tbb_Click"/>
+            <ld:SymbolToolbarButton x:Name="tbb" Symbol="&#xE71A;" Description="n1" Click="tbb_Click"/>
             <ld:ImageToolbarButton Source="file:///D:/ptr22/OneDrive/Immagini/LiTE.png" Description="n2" Position="Right"/>
         </ld:ToolbarItemsCollection>
     </ld:LiTEPage.Toolbar>
